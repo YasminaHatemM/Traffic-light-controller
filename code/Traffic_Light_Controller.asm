@@ -148,10 +148,9 @@ _interrupt:
 	CLRF       PCLATH+0
 
 ;Traffic_Light_Controller.c,32 :: 		void interrupt(){
-;Traffic_Light_Controller.c,33 :: 		while(INTF_bit){
-L_interrupt10:
+;Traffic_Light_Controller.c,33 :: 		if(INTF_bit){
 	BTFSS      INTF_bit+0, BitPos(INTF_bit+0)
-	GOTO       L_interrupt11
+	GOTO       L_interrupt10
 ;Traffic_Light_Controller.c,34 :: 		PORTC = 0X00;
 	CLRF       PORTC+0
 ;Traffic_Light_Controller.c,35 :: 		Delay_ms(100);
@@ -161,21 +160,21 @@ L_interrupt10:
 	MOVWF      R12+0
 	MOVLW      186
 	MOVWF      R13+0
-L_interrupt12:
+L_interrupt11:
 	DECFSZ     R13+0, 1
-	GOTO       L_interrupt12
+	GOTO       L_interrupt11
 	DECFSZ     R12+0, 1
-	GOTO       L_interrupt12
+	GOTO       L_interrupt11
 	DECFSZ     R11+0, 1
-	GOTO       L_interrupt12
+	GOTO       L_interrupt11
 	NOP
 ;Traffic_Light_Controller.c,36 :: 		if (!switching_button){
 	BTFSC      PORTB+0, 1
-	GOTO       L_interrupt13
+	GOTO       L_interrupt12
 ;Traffic_Light_Controller.c,37 :: 		if(RED_W) {
 	BTFSS      PORTD+0, 0
-	GOTO       L_interrupt14
-;Traffic_Light_Controller.c,38 :: 		GREEN_W=1; YELLOW_S=1;RED_S=0;
+	GOTO       L_interrupt13
+;Traffic_Light_Controller.c,38 :: 		GREEN_W=1; YELLOW_S=1 ; RED_S=0;
 	BSF        PORTD+0, 2
 	BSF        PORTD+0, 4
 	BCF        PORTD+0, 3
@@ -186,11 +185,11 @@ L_interrupt12:
 ;Traffic_Light_Controller.c,40 :: 		for (count = 3; count > 0 ; count--){
 	MOVLW      3
 	MOVWF      _count+0
-L_interrupt15:
+L_interrupt14:
 	MOVF       _count+0, 0
 	SUBLW      0
 	BTFSC      STATUS+0, 0
-	GOTO       L_interrupt16
+	GOTO       L_interrupt15
 ;Traffic_Light_Controller.c,41 :: 		PORTC = 0 | ((count % 10)<<4) ;
 	MOVLW      10
 	MOVWF      R4+0
@@ -218,33 +217,34 @@ L_interrupt15:
 	MOVWF      R12+0
 	MOVLW      93
 	MOVWF      R13+0
-L_interrupt18:
+L_interrupt17:
 	DECFSZ     R13+0, 1
-	GOTO       L_interrupt18
+	GOTO       L_interrupt17
 	DECFSZ     R12+0, 1
-	GOTO       L_interrupt18
+	GOTO       L_interrupt17
 	DECFSZ     R11+0, 1
-	GOTO       L_interrupt18
+	GOTO       L_interrupt17
 	NOP
 	NOP
 ;Traffic_Light_Controller.c,40 :: 		for (count = 3; count > 0 ; count--){
 	DECF       _count+0, 1
 ;Traffic_Light_Controller.c,43 :: 		}
-	GOTO       L_interrupt15
-L_interrupt16:
+	GOTO       L_interrupt14
+L_interrupt15:
 ;Traffic_Light_Controller.c,44 :: 		RED_S=1;
 	BSF        PORTD+0, 3
 ;Traffic_Light_Controller.c,45 :: 		YELLOW_S=0;
 	BCF        PORTD+0, 4
 ;Traffic_Light_Controller.c,46 :: 		}
-	GOTO       L_interrupt19
-L_interrupt14:
+	GOTO       L_interrupt18
+L_interrupt13:
 ;Traffic_Light_Controller.c,47 :: 		else if(RED_S){
 	BTFSS      PORTD+0, 3
-	GOTO       L_interrupt20
-;Traffic_Light_Controller.c,48 :: 		GREEN_S=1; YELLOW_W=1;
+	GOTO       L_interrupt19
+;Traffic_Light_Controller.c,48 :: 		GREEN_S=1; YELLOW_W=1;RED_W = 0;
 	BSF        PORTD+0, 5
 	BSF        PORTD+0, 1
+	BCF        PORTD+0, 0
 ;Traffic_Light_Controller.c,49 :: 		RED_S=0; YELLOW_S=0; GREEN_W=0;
 	BCF        PORTD+0, 3
 	BCF        PORTD+0, 4
@@ -252,11 +252,11 @@ L_interrupt14:
 ;Traffic_Light_Controller.c,50 :: 		for (count = 3; count > 0 ; count--){
 	MOVLW      3
 	MOVWF      _count+0
-L_interrupt21:
+L_interrupt20:
 	MOVF       _count+0, 0
 	SUBLW      0
 	BTFSC      STATUS+0, 0
-	GOTO       L_interrupt22
+	GOTO       L_interrupt21
 ;Traffic_Light_Controller.c,51 :: 		PORTC = 0 | ((count % 10)<<4) ;
 	MOVLW      10
 	MOVWF      R4+0
@@ -284,27 +284,27 @@ L_interrupt21:
 	MOVWF      R12+0
 	MOVLW      93
 	MOVWF      R13+0
-L_interrupt24:
+L_interrupt23:
 	DECFSZ     R13+0, 1
-	GOTO       L_interrupt24
+	GOTO       L_interrupt23
 	DECFSZ     R12+0, 1
-	GOTO       L_interrupt24
+	GOTO       L_interrupt23
 	DECFSZ     R11+0, 1
-	GOTO       L_interrupt24
+	GOTO       L_interrupt23
 	NOP
 	NOP
 ;Traffic_Light_Controller.c,50 :: 		for (count = 3; count > 0 ; count--){
 	DECF       _count+0, 1
 ;Traffic_Light_Controller.c,53 :: 		}
-	GOTO       L_interrupt21
-L_interrupt22:
+	GOTO       L_interrupt20
+L_interrupt21:
 ;Traffic_Light_Controller.c,54 :: 		RED_W=1;
 	BSF        PORTD+0, 0
 ;Traffic_Light_Controller.c,55 :: 		YELLOW_W=0;
 	BCF        PORTD+0, 1
 ;Traffic_Light_Controller.c,56 :: 		}
-L_interrupt20:
 L_interrupt19:
+L_interrupt18:
 ;Traffic_Light_Controller.c,57 :: 		PORTC = 0X00 ;
 	CLRF       PORTC+0
 ;Traffic_Light_Controller.c,58 :: 		Delay_ms(100);
@@ -314,33 +314,32 @@ L_interrupt19:
 	MOVWF      R12+0
 	MOVLW      186
 	MOVWF      R13+0
-L_interrupt25:
+L_interrupt24:
 	DECFSZ     R13+0, 1
-	GOTO       L_interrupt25
+	GOTO       L_interrupt24
 	DECFSZ     R12+0, 1
-	GOTO       L_interrupt25
+	GOTO       L_interrupt24
 	DECFSZ     R11+0, 1
-	GOTO       L_interrupt25
+	GOTO       L_interrupt24
 	NOP
 ;Traffic_Light_Controller.c,59 :: 		while(!switching_button);
-L_interrupt26:
+L_interrupt25:
 	BTFSC      PORTB+0, 1
-	GOTO       L_interrupt27
 	GOTO       L_interrupt26
-L_interrupt27:
+	GOTO       L_interrupt25
+L_interrupt26:
 ;Traffic_Light_Controller.c,60 :: 		}
-L_interrupt13:
+L_interrupt12:
 ;Traffic_Light_Controller.c,61 :: 		if(manual_button)INTF_bit = 0;
 	BTFSS      PORTB+0, 0
-	GOTO       L_interrupt28
+	GOTO       L_interrupt27
 	BCF        INTF_bit+0, BitPos(INTF_bit+0)
-L_interrupt28:
+L_interrupt27:
 ;Traffic_Light_Controller.c,62 :: 		}
-	GOTO       L_interrupt10
-L_interrupt11:
+L_interrupt10:
 ;Traffic_Light_Controller.c,63 :: 		}
 L_end_interrupt:
-L__interrupt34:
+L__interrupt33:
 	MOVF       ___savePCLATH+0, 0
 	MOVWF      PCLATH+0
 	SWAPF      ___saveSTATUS+0, 0
@@ -396,17 +395,17 @@ _main:
 	MOVWF      R12+0
 	MOVLW      93
 	MOVWF      R13+0
-L_main29:
+L_main28:
 	DECFSZ     R13+0, 1
-	GOTO       L_main29
+	GOTO       L_main28
 	DECFSZ     R12+0, 1
-	GOTO       L_main29
+	GOTO       L_main28
 	DECFSZ     R11+0, 1
-	GOTO       L_main29
+	GOTO       L_main28
 	NOP
 	NOP
 ;Traffic_Light_Controller.c,94 :: 		while(1){
-L_main30:
+L_main29:
 ;Traffic_Light_Controller.c,95 :: 		GREEN_S = 1; RED_W = 1;
 	BSF        PORTD+0, 5
 	BSF        PORTD+0, 0
@@ -419,34 +418,44 @@ L_main30:
 	MOVLW      15
 	MOVWF      FARG_CountDown_num+0
 	CALL       _CountDown+0
-;Traffic_Light_Controller.c,98 :: 		YELLOW_S = 1;
+;Traffic_Light_Controller.c,98 :: 		YELLOW_S = 1;RED_W = 1;YELLOW_W = 0;
 	BSF        PORTD+0, 4
-;Traffic_Light_Controller.c,99 :: 		GREEN_S=0;
+	BSF        PORTD+0, 0
+	BCF        PORTD+0, 1
+;Traffic_Light_Controller.c,99 :: 		GREEN_S=0; RED_S =0; GREEN_W = 0;
 	BCF        PORTD+0, 5
+	BCF        PORTD+0, 3
+	BCF        PORTD+0, 2
 ;Traffic_Light_Controller.c,100 :: 		CountDown(3);
 	MOVLW      3
 	MOVWF      FARG_CountDown_num+0
 	CALL       _CountDown+0
-;Traffic_Light_Controller.c,101 :: 		RED_S = 1; GREEN_W = 1;
+;Traffic_Light_Controller.c,101 :: 		RED_S = 1; GREEN_W = 1; YELLOW_W =0 ;
 	BSF        PORTD+0, 3
 	BSF        PORTD+0, 2
-;Traffic_Light_Controller.c,102 :: 		RED_W = 0; YELLOW_S = 0;
+	BCF        PORTD+0, 1
+;Traffic_Light_Controller.c,102 :: 		RED_W = 0; YELLOW_S = 0;GREEN_S=0;
 	BCF        PORTD+0, 0
 	BCF        PORTD+0, 4
+	BCF        PORTD+0, 5
 ;Traffic_Light_Controller.c,103 :: 		CountDown(23);
 	MOVLW      23
 	MOVWF      FARG_CountDown_num+0
 	CALL       _CountDown+0
-;Traffic_Light_Controller.c,104 :: 		YELLOW_W = 1;
+;Traffic_Light_Controller.c,104 :: 		YELLOW_W = 1; YELLOW_S = 0;GREEN_S=0;
 	BSF        PORTD+0, 1
-;Traffic_Light_Controller.c,105 :: 		GREEN_W = 0;
+	BCF        PORTD+0, 4
+	BCF        PORTD+0, 5
+;Traffic_Light_Controller.c,105 :: 		GREEN_W = 0;RED_W = 0; RED_S =1;
 	BCF        PORTD+0, 2
+	BCF        PORTD+0, 0
+	BSF        PORTD+0, 3
 ;Traffic_Light_Controller.c,106 :: 		CountDown(3);
 	MOVLW      3
 	MOVWF      FARG_CountDown_num+0
 	CALL       _CountDown+0
 ;Traffic_Light_Controller.c,107 :: 		}
-	GOTO       L_main30
+	GOTO       L_main29
 ;Traffic_Light_Controller.c,108 :: 		}
 L_end_main:
 	GOTO       $+0

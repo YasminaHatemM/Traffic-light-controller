@@ -1,5 +1,5 @@
-#line 1 "B:/college/2nd communication/Traffic Ligth Controller/code/Traffic_Light_Controller.c"
-#line 14 "B:/college/2nd communication/Traffic Ligth Controller/code/Traffic_Light_Controller.c"
+#line 1 "B:/college/2nd communication/Traffic_Ligth_Controller/code/Traffic_Light_Controller.c"
+#line 14 "B:/college/2nd communication/Traffic_Ligth_Controller/code/Traffic_Light_Controller.c"
 char i ,led ,count ;
 void CountDown(char num){
  for (i = num; i > 3 ; i--){
@@ -19,12 +19,12 @@ void CountDown(char num){
  }
 }
 void interrupt(){
- while(INTF_bit){
+ if(INTF_bit){
  PORTC = 0X00;
  Delay_ms(100);
  if (! PORTB.B1 ){
  if( PORTD.B0 ) {
-  PORTD.B2 =1;  PORTD.B4 =1; PORTD.B3 =0;
+  PORTD.B2 =1;  PORTD.B4 =1 ;  PORTD.B3 =0;
   PORTD.B5 =0;  PORTD.B0 =0;  PORTD.B1 =0;
  for (count = 3; count > 0 ; count--){
  PORTC = 0 | ((count % 10)<<4) ;
@@ -34,7 +34,7 @@ void interrupt(){
   PORTD.B4 =0;
  }
  else if( PORTD.B3 ){
-  PORTD.B5 =1;  PORTD.B1 =1;
+  PORTD.B5 =1;  PORTD.B1 =1; PORTD.B0  = 0;
   PORTD.B3 =0;  PORTD.B4 =0;  PORTD.B2 =0;
  for (count = 3; count > 0 ; count--){
  PORTC = 0 | ((count % 10)<<4) ;
@@ -84,14 +84,14 @@ void main() {
   PORTD.B5  = 1;  PORTD.B0  = 1;
   PORTD.B4  = 0;  PORTD.B3  = 0;  PORTD.B2  = 0;  PORTD.B1  = 0;
  CountDown(15);
-  PORTD.B4  = 1;
-  PORTD.B5 =0;
+  PORTD.B4  = 1; PORTD.B0  = 1; PORTD.B1  = 0;
+  PORTD.B5 =0;  PORTD.B3  =0;  PORTD.B2  = 0;
  CountDown(3);
-  PORTD.B3  = 1;  PORTD.B2  = 1;
-  PORTD.B0  = 0;  PORTD.B4  = 0;
+  PORTD.B3  = 1;  PORTD.B2  = 1;  PORTD.B1  =0 ;
+  PORTD.B0  = 0;  PORTD.B4  = 0; PORTD.B5 =0;
  CountDown(23);
-  PORTD.B1  = 1;
-  PORTD.B2  = 0;
+  PORTD.B1  = 1;  PORTD.B4  = 0; PORTD.B5 =0;
+  PORTD.B2  = 0; PORTD.B0  = 0;  PORTD.B3  =1;
  CountDown(3);
  }
 }

@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=C:\Users\yasmi\traffic_light_controller\project.c
+Value=Traffic_Light_Controller.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -37,7 +37,7 @@ File0=Traffic_Light_Controller.mcppi
 Count=3
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16\
-Path2=B:\college\2nd communication\Traffic Ligth Controller\code\
+Path2=B:\college\2nd communication\Traffic_Ligth_Controller\code\
 [HEADER_PATH]
 Count=0
 [HEADERS]
