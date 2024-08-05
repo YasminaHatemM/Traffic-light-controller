@@ -45,7 +45,12 @@ void interrupt(){
  }
  PORTC = 0X00 ;
  Delay_ms(100);
- while(! PORTB.B1 );
+ while(! PORTB.B1 ){
+ if( PORTB.B0 ){
+ INTF_bit = 0;
+ break;
+ }
+ }
  }
  if( PORTB.B0 )INTF_bit = 0;
  }

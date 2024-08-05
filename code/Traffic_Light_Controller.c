@@ -56,7 +56,12 @@ void interrupt(){
            }
            PORTC = 0X00 ;
            Delay_ms(100);
-           while(!switching_button);
+           while(!switching_button){
+               if(manual_button){
+                   INTF_bit = 0;
+                   break;
+               }
+           }
         }
         if(manual_button)INTF_bit = 0;
      }
