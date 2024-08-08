@@ -13,11 +13,13 @@
 #define Display PORTC
 #define Leds PORTD
 
-char i ,led ,count ;
+char i ,led ,count ,tens ,units;
 void CountDown(char num){
     for (i = num; i > 3 ; i--){
-        //          TENS         UNITS
-        Display = (i / 10) | ((i % 10)<<4) ;
+
+        tens = i / 10;
+        units = i % 10 ;
+        Display = tens | ( units << 4 ) ;
         Delay_ms(1000);
     }
     if (num==3){

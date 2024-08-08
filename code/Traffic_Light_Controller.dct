@@ -1182,6 +1182,7 @@ t6963c_writecommand
 t6963c_writedata
 tan
 tanh
+tens
 time_datetoepoch
 time_epochtodate
 time_jd1970
@@ -1324,6 +1325,7 @@ uart1_tx_idle
 uart1_write
 uart1_write_text
 uldiv
+units
 vdelay_advanced_ms
 vdelay_ms
 w

@@ -1,10 +1,12 @@
 #line 1 "B:/college/2nd communication/Traffic_Ligth_Controller/code/Traffic_Light_Controller.c"
 #line 16 "B:/college/2nd communication/Traffic_Ligth_Controller/code/Traffic_Light_Controller.c"
-char i ,led ,count ;
+char i ,led ,count ,tens ,units;
 void CountDown(char num){
  for (i = num; i > 3 ; i--){
 
-  PORTC  = (i / 10) | ((i % 10)<<4) ;
+ tens = i / 10;
+ units = i % 10 ;
+  PORTC  = tens | ( units << 4 ) ;
  Delay_ms(1000);
  }
  if (num==3){
