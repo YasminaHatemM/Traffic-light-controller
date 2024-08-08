@@ -1,5 +1,6 @@
 main
-	CountDown
-		Div_8X8_U
+	Automatic
+		CountDown
+			Div_8X8_U
 interrupt
 	Div_8X8_U
