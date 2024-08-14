@@ -96,6 +96,7 @@ void main() {
 
      //NPN as switches
      TRISB.B4 = 0;
+     
      TRISB.B5 = 0;
      TRISB.B6 = 0;
      TRISB.B7 = 0;
